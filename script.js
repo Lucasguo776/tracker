@@ -17,7 +17,6 @@ const localhostURL = "http://localhost:3000";
 var puuid = "";
 var summonerId = "";
 
-
 document.addEventListener("keydown", function(event) {
   if (event.key === 'Enter') {
       searchSummoner();
@@ -34,6 +33,12 @@ function clearSummonerInfo() {
   document.getElementById("rankSolo").innerHTML = "";
   document.getElementById("rankSoloWinRate").innerHTML = "";
   document.getElementById("matchData").innerHTML = "";
+  document.getElementById("recentOverallStatsWinRate").innerHTML = "";
+  document.getElementById("recentOverallStatsKDA").innerHTML = "";
+  document.getElementById("recentOverallStatsKillParticipation").innerHTML = "";
+  document.getElementById("recentOverallStatsCSGoldDmgVS").innerHTML = "";
+  document.getElementById("recentOverallStatsTeamPosition").innerHTML = "";
+
 }
 
 // Utility function for win rate
@@ -109,6 +114,7 @@ function processRankedData(summonerRankedData) {
 function processRecentStats(recentMatchData) {
   var recentStats = {
     recentOverallStats: {
+      gamesPlayed: 0,
       wins: 0,
       losses: 0,
       kills: 0,
@@ -120,13 +126,7 @@ function processRecentStats(recentMatchData) {
       damage: 0,
       visionScore: 0,
       killParticipation: 0,
-      rolesPlayed: {
-        topLane: 0,
-        jungle: 0,
-        midLane: 0,
-        botLane: 0,
-        support: 0
-      }
+      rolesPlayed: { TOP: 0, JUNGLE: 0, MIDDLE: 0, BOTTOM: 0, SUPPORT: 0 },
     },
     recentChampionStats: [],
   };
@@ -145,9 +145,15 @@ function processRecentStats(recentMatchData) {
     var playerStats = match.info.participants[counter];
     var totalCurrentTeamKills = 0;
 
+    recentStats.recentOverallStats.gamesPlayed++;
+    
+    if (playerStats.gameEndedInEarlySurrender) {
+      continue;
+    }
+
     if (playerStats.win) {
       recentStats.recentOverallStats.wins += 1;
-    } else {
+    } else  {
       recentStats.recentOverallStats.losses += 1;
     }
     recentStats.recentOverallStats.kills += playerStats.kills;
@@ -164,7 +170,7 @@ function processRecentStats(recentMatchData) {
       recentStats.recentOverallStats.rolesPlayed.jungle++;
     } else if (playerStats.teamPosition === "MIDDLE") {
       recentStats.recentOverallStats.rolesPlayed.midLane++;
-    } else if (playerStats.teamPosition === "Bottom") {
+    } else if (playerStats.teamPosition === "BOTTOM") {
       recentStats.recentOverallStats.rolesPlayed.botLane++;
     } else if (playerStats.teamPosition === "UTILITY") {
       recentStats.recentOverallStats.rolesPlayed.support++;
@@ -251,14 +257,22 @@ function updateRecentOverallStats(recentStats) {
   const stats = recentStats.recentOverallStats;
   const gamesPlayed = stats.wins + stats.losses;
   document.getElementById("recentStatsHeading").innerHTML = "Recent Stats";
-  document.getElementById("recentOverallStatsWinRate").innerHTML = stats.wins + "W " + stats.losses + "L " + "Win Rate: " + winRate(stats.wins, stats.losses) + "%";
-  document.getElementById("recentOverallStatsKDA").innerHTML = stats.kills / gamesPlayed + " / " + stats.deaths / gamesPlayed + " / " + stats.assists / gamesPlayed + " " + Math.round((stats.kills + stats.assists) / stats.deaths * 100)/100 + "KDA";
-  document.getElementById("recentOverallStatsKillParticipation").innerHTML = Math.round(stats.killParticipation * 100); + "% Kill Participation";
+  document.getElementById("recentOverallStatsWinRate").innerHTML = stats.gamesPlayed + "G " + stats.wins + "W " + stats.losses + "L " + "Win Rate: " + winRate(stats.wins, stats.losses) + "%";
+  document.getElementById("recentOverallStatsKDA").innerHTML = Math.round(stats.kills / gamesPlayed * 10) / 10 
+                                                              + " / " + Math.round(stats.deaths / gamesPlayed * 10) / 10 
+                                                              + " / " + Math.round(stats.assists / gamesPlayed * 10) / 10 
+                                                              + " " + Math.round((stats.kills + stats.assists) / stats.deaths * 100)/100 + "KDA";
+  document.getElementById("recentOverallStatsKillParticipation").innerHTML = Math.round(stats.killParticipation * 100) + "% Kill Participation";
   document.getElementById("recentOverallStatsCSGoldDmgVS").innerHTML = Math.round((stats.creepScore / stats.minutesPlayed) * 10) / 10 + " CS/min " 
                                                                         + Math.round(stats.gold / stats.minutesPlayed) + " Gold/min "
                                                                         + Math.round(stats.damage / stats.minutesPlayed) + " Damage/min "
                                                                         + stats.visionScore + " Vision Score ";
-  document.getElementById("recentOverallStatsTeamPosition").innerHTML = "TOP: "
+  document.getElementById("recentOverallStatsTeamPosition").innerHTML = "TOP: " + stats.rolesPlayed.topLane 
+                                                                      + " JUNGLE: " + stats.rolesPlayed.jungle 
+                                                                      + " MID: " + stats.rolesPlayed.midLane 
+                                                                      + " SUPPORT: " + stats.rolesPlayed.support 
+                                                                      + " BOTTOM: " + stats.rolesPlayed.botLane;
+  
   console.log(recentStats);
 }
 
@@ -288,8 +302,14 @@ async function searchSummoner() {
     updateSummonerInfo(gameName, tagLine, summonerData);
     updateRankedStats(rankFlex, rankSolo);
     updateRecentOverallStats(recentStats);
-
+    
     console.log(recentMatchData);
+
+    const arrayDisplay2 = recentStats.recentChampionStats.map(obj => {
+      return Object.entries(obj).map(([key, value]) => `${key}: ${value}`).join(', ');
+    }).join('<br>');
+    document.getElementById("recentChampionStats").innerHTML = arrayDisplay2;
+
     const arraydisplay = recentMatchListData.join('<br>');
     document.getElementById("matchData").innerHTML = arraydisplay;
   } catch (error) {
