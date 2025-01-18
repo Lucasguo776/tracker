@@ -2,3 +2,16 @@ body {
     text-align: center;
     vertical-align: center;
 }
+
+.summonerSpellIcon img {
+  width: 50px;
+  height: auto;
+}
+.championIconMain {
+  width: 100px;
+  height: auto;
+}
+.championIconSmall img {
+  width: 20px;
+  height: auto;
+}

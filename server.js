@@ -14,6 +14,17 @@ var regionRoutingURL = "";
 // Enable CORS for all origins (you can restrict this if needed)
 app.use(cors());
 
+app.get('/ddragon/version', async (req, res) => {
+  try {
+    const response = await fetch("https://ddragon.leagueoflegends.com/api/versions.json");
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to fetch ddragon version data' });
+  }
+});
+
 app.get('/account/by-riot-id', async (req, res) => {
   const { gameName, tagLine, regionId } = req.query;
   const numericRegionId = Number(regionId);

@@ -10,8 +10,120 @@ const tiers = {
   EMERALD: "EMERALD",
   MASTER: "MASTER",
   GRANDMASTER: "GRANDMASTER",
-  CHALLENGER: "CHALLENGER" 
+  CHALLENGER: "CHALLENGER" ,
 } 
+
+const summonerSpells = [
+  { id: 21, name: "SummonerBarrier" },
+  { id: 1, name: "SummonerBoost" },
+  { id: 14, name: "SummonerDot" },
+  { id: 3, name: "SummonerExhaust" },
+  { id: 4, name: "SummonerFlash" },
+  { id: 6, name: "SummonerHaste" },
+  { id: 7, name: "SummonerHeal" },
+  { id: 13, name: "SummonerMana" },
+  { id: 11, name: "SummonerSmite" },
+  { id: 12, name: "SummonerTeleport" },
+];
+
+const runePaths = [
+  { id: 8000, code: "7201_Precision", name: "Precision" },
+  { id: 8100, code: "7200_Domination", name: "Domination" },
+  { id: 8200, code: "7202_Sorcery", name: "Sorcery" },
+  { id: 8300, code: "7203_Whimsy", name: "Inspiration" },
+  { id: 8400, code: "7204_Resolve", name: "Resolve" },
+];
+
+const runes = [
+  { id: 8112, name: "Electrocute", iconURL: "Electrocute/Electrocute" },
+  { id: 8128, name: "DarkHarvest", iconURL: "DarkHarvest/DarkHarvest" },
+  { id: 9923, name: "HailOfBlades", iconURL: "HailOfBlades/HailOfBlades" },
+  { id: 8126, name: "CheapShot", iconURL: "CheapShot/CheapShot" },
+  { id: 8139, name: "TasteofBlood", iconURL: "TasteofBlood/GreenTerror_TasteOfBlood" },
+  { id: 8143, name: "SuddenImpact", iconURL: "SuddenImpact/SuddenImpact" },
+  { id: 8137, name: "SixthSense", iconURL: "SixthSense/SixthSense" },
+  { id: 8140, name: "GrislyMementos", iconURL: "GrislyMementos/GrislyMementos" },
+  { id: 8141, name: "DeepWard", iconURL: "DeepWard/DeepWard" },
+  { id: 8135, name: "TreasureHunter", iconURL: "TreasureHunter/TreasureHunter" },
+  { id: 8105, name: "RelentlessHunter", iconURL: "RelentlessHunter/RelentlessHunter" },
+  { id: 8106, name: "UltimateHunter", iconURL: "UltimateHunter/UltimateHunter" },
+  { id: 8351, name: "GlacialAugment", iconURL: "GlacialAugment/GlacialAugment" },
+  { id: 8360, name: "UnsealedSpellbook", iconURL: "UnsealedSpellbook/UnsealedSpellbook" },
+  { id: 8369, name: "FirstStrike", iconURL: "FirstStrike/FirstStrike" },
+  { id: 8306, name: "HextechFlashtraption", iconURL: "HextechFlashtraption/HextechFlashtraption" },
+  { id: 8304, name: "MagicalFootwear", iconURL: "MagicalFootwear/MagicalFootwear" },
+  { id: 8321, name: "CashBack", iconURL: "CashBack/CashBack2" },
+  { id: 8313, name: "TripleTonic", iconURL: "PerfectTiming/AlchemistCabinet" },
+  { id: 8352, name: "TimeWarpTonic", iconURL: "TimeWarpTonic/TimeWarpTonic" },
+  { id: 8345, name: "BiscuitDelivery", iconURL: "BiscuitDelivery/BiscuitDelivery" },
+  { id: 8347, name: "CosmicInsight", iconURL: "CosmicInsight/CosmicInsight" },
+  { id: 8410, name: "ApproachVelocity", iconURL: "ApproachVelocity/ApproachVelocity" },
+  { id: 8316, name: "JackOfAllTrades", iconURL: "JackOfAllTrades/JackofAllTrades2" },
+  { id: 8005, name: "PressTheAttack", iconURL: "PressTheAttack/PressTheAttack" },
+  { id: 8008, name: "LethalTempo", iconURL: "LethalTempo/LethalTempoTemp" },
+  { id: 8021, name: "FleetFootwork", iconURL: "FleetFootwork/FleetFootwork" },
+  { id: 8010, name: "Conqueror", iconURL: "Conqueror/Conqueror" },
+  { id: 9101, name: "AbsorbLife", iconURL: "AbsorbLife/AbsorbLife" },
+  { id: 9111, name: "Triumph", iconURL: "Triumph/Triumph" },
+  { id: 8009, name: "PresenceOfMind", iconURL: "PresenceOfMind/PresenceOfMind" },
+  { id: 9104, name: "LegendAlacrity", iconURL: "LegendAlacrity/LegendAlacrity" },
+  { id: 9105, name: "LegendHaste", iconURL: "LegendHaste/LegendHaste" },
+  { id: 9103, name: "LegendBloodline", iconURL: "LegendBloodline/LegendBloodline" },
+  { id: 8014, name: "CoupDeGrace", iconURL: "CoupDeGrace/CoupDeGrace" },
+  { id: 8017, name: "CutDown", iconURL: "CutDown/CutDown" },
+  { id: 8299, name: "LastStand", iconURL: "LastStand/LastStand" },
+  { id: 8437, name: "GraspOfTheUndying", iconURL: "GraspOfTheUndying/GraspOfTheUndying" },
+  { id: 8439, name: "Aftershock", iconURL: "Aftershock/Aftershock" },
+  { id: 8465, name: "Guardian", iconURL: "VeteranAftershock/VeteranAftershock" },
+  { id: 8446, name: "Demolish", iconURL: "Demolish/Demolish" },
+  { id: 8463, name: "FontOfLife", iconURL: "FontOfLife/FontOfLife" },
+  { id: 8401, name: "ShieldBash", iconURL: "ShieldBash/ShieldBash" },
+  { id: 8429, name: "Conditioning", iconURL: "Conditioning/Conditioning" },
+  { id: 8444, name: "SecondWind", iconURL: "SecondWind/SecondWind" },
+  { id: 8473, name: "BonePlating", iconURL: "BonePlating/BonePlating" },
+  { id: 8451, name: "Overgrowth", iconURL: "Overgrowth/Overgrowth" },
+  { id: 8453, name: "Revitalize", iconURL: "Revitalize/Revitalize" },
+  { id: 8242, name: "Unflinching", iconURL: "Unflinching/Unflinching" },
+  { id: 8214, name: "SummonAery", iconURL: "SummonAery/SummonAery" },
+  { id: 8229, name: "ArcaneComet", iconURL: "ArcaneComet/ArcaneComet" },
+  { id: 8230, name: "PhaseRush", iconURL: "PhaseRush/PhaseRush" },
+  { id: 8224, name: "AxiomArcanist", iconURL: "NullifyingOrb/Axiom_Arcanist" },
+  { id: 8226, name: "ManaflowBand", iconURL: "ManaflowBand/ManaflowBand" },
+  { id: 8275, name: "NimbusCloak", iconURL: "NimbusCloak/6361" },
+  { id: 8210, name: "Transcendence", iconURL: "Transcendence/Transcendence" },
+  { id: 8234, name: "Celerity", iconURL: "Celerity/CelerityTemp" },
+  { id: 8233, name: "AbsoluteFocus", iconURL: "AbsoluteFocus/AbsoluteFocus" },
+  { id: 8237, name: "Scorch", iconURL: "Scorch/Scorch" },
+  { id: 8232, name: "Waterwalking", iconURL: "Waterwalking/Waterwalking" },
+  { id: 8236, name: "GatheringStorm", iconURL: "GatheringStorm/GatheringStorm" }
+]
+
+const queueData = [
+  { queueId: 0, map: "Custom games", description: "Custom Game" },
+  { queueId: 2, map: "Summoner's Rift", description: "5v5 Blind Pick" },
+  { queueId: 4, map: "Summoner's Rift", description: "5v5 Ranked Solo" },
+  { queueId: 6, map: "Summoner's Rift", description: "5v5 Ranked Premade" },
+  { queueId: 7, map: "Summoner's Rift", description: "Co-op vs AI" },
+  { queueId: 8, map: "Twisted Treeline", description: "3v3 Normal" },
+  { queueId: 9, map: "Twisted Treeline", description: "3v3 Ranked Flex" },
+  { queueId: 14, map: "Summoner's Rift", description: "5v5 Draft Pick" },
+  { queueId: 16, map: "Crystal Scar", description: "5v5 Dominion Blind Pick" },
+  { queueId: 25, map: "Crystal Scar", description: "Dominion Co-op vs AI" },
+  { queueId: 31, map: "Summoner's Rift", description: "Co-op vs AI Intro Bot" },
+  { queueId: 32, map: "Summoner's Rift", description: "Co-op vs AI Beginner Bot" },
+  { queueId: 33, map: "Summoner's Rift", description: "Co-op vs AI Intermediate Bot" },
+  { queueId: 400, map: "Summoner's Rift", description: "5v5 Draft Pick" },
+  { queueId: 420, map: "Summoner's Rift", description: "5v5 Ranked Solo" },
+  { queueId: 430, map: "Summoner's Rift", description: "5v5 Blind Pick" },
+  { queueId: 440, map: "Summoner's Rift", description: "5v5 Ranked Flex" },
+  { queueId: 450, map: "Howling Abyss", description: "5v5 ARAM" },
+  { queueId: 700, map: "Summoner's Rift", description: "Clash" },
+  { queueId: 900, map: "Summoner's Rift", description: "ARURF" },
+  { queueId: 1020, map: "Summoner's Rift", description: "One for All" },
+];
+
+var ddragonURL = "";
+var ddragonURLwithVersion = "";
 
 const localhostURL = "http://localhost:3000";
 var puuid = "";
@@ -41,6 +153,13 @@ function clearSummonerInfo() {
 
 }
 
+function KDAcalculator(kills, deaths, assists) {
+  if (deaths === 0) {
+    deaths = 1;
+  }
+  return Math.round((kills + assists) / deaths * 100) / 100;
+}
+
 // Utility function for win rate
 function winRate(wins, losses) {
   if (losses === 0) return 100;
@@ -48,6 +167,11 @@ function winRate(wins, losses) {
 }
 
 // Fetch functions
+async function fetchDdragonVersion() {
+  const response = await fetch(localhostURL + '/ddragon/version');
+  return response.json();
+}
+
 async function fetchAccountData(gameName, tagLine, regionId) {
   const response = await fetch(localhostURL + `/account/by-riot-id?gameName=${gameName}&tagLine=${tagLine}&regionId=${regionId}`);
   return response.json();
@@ -111,6 +235,62 @@ function processRankedData(summonerRankedData) {
   return { rankFlex, rankSolo };
 }
 
+function processMatchStatsHelper(match, counter, totalCurrentTeamKills) {
+  playerStats = match.info.participants[counter];
+
+  const recentMatchStats = {
+    matchId: match.info.gameId,
+    participants: [],
+    queueId: match.info.queueId,
+    gameResult: "",
+    gameEndTimestamp: match.info.gameEndTimestamp, 
+    kills: playerStats.kills,
+    deaths: playerStats.deaths,
+    assists: playerStats.assists,
+    minutesPlayed: playerStats.timePlayed / 60,
+    creepScore: playerStats.neutralMinionsKilled + playerStats.totalMinionsKilled,
+    gold: playerStats.goldEarned,
+    damage: playerStats.totalDamageDealtToChampions, 
+    visionScore: playerStats.visionScore, 
+    killParticipation: (playerStats.kills + playerStats.assists) / totalCurrentTeamKills,
+    championName: playerStats.championName,
+    champLevel: playerStats.champLevel,
+    itemIds: [],
+    summoner1Id: playerStats.summoner1Id,
+    summoner2Id: playerStats.summoner2Id,
+    runePathPrimary: playerStats.perks.styles[0].style,
+    runePathSecondary: playerStats.perks.styles[1].style,
+    runeKeystone: playerStats.perks.styles[0].selections[0].perk,
+  };
+
+  for (const player of match.info.participants) {
+    recentMatchStats.participants.push({
+      gameName: player.riotIdGameName,
+      tagLine: player.riotIdTagline,
+      championName: player.championName,
+      teamId: player.teamId,
+    });
+  }
+
+  if (playerStats.gameEndedInEarlySurrender) {
+    recentMatchStats.gameResult = "REMAKE";
+  } else if (playerStats.win) {
+    recentMatchStats.gameResult = "WIN";
+  } else {
+    recentMatchStats.gameResult = "LOSS";
+  }
+
+  recentMatchStats.itemIds.push(playerStats.item0);
+  recentMatchStats.itemIds.push(playerStats.item1);
+  recentMatchStats.itemIds.push(playerStats.item2);
+  recentMatchStats.itemIds.push(playerStats.item3);
+  recentMatchStats.itemIds.push(playerStats.item4);
+  recentMatchStats.itemIds.push(playerStats.item5);
+  recentMatchStats.itemIds.push(playerStats.item6);
+
+  return recentMatchStats;
+}
+
 function processRecentStats(recentMatchData) {
   var recentStats = {
     recentOverallStats: {
@@ -126,13 +306,14 @@ function processRecentStats(recentMatchData) {
       damage: 0,
       visionScore: 0,
       killParticipation: 0,
-      rolesPlayed: { TOP: 0, JUNGLE: 0, MIDDLE: 0, BOTTOM: 0, SUPPORT: 0 },
+      rolesPlayed: { topLane: 0, jungle: 0, midLane: 0, botLane: 0, support: 0 },
     },
     recentChampionStats: [],
+    recentMatchData: [],
   };
 
   var totalOverallTeamKills = 0;
-  for(const match of recentMatchData) {
+  for (const match of recentMatchData) {
     // Determine participant within match
     var counter = 0;
     for(const playerId of match.metadata.participants) {
@@ -146,7 +327,18 @@ function processRecentStats(recentMatchData) {
     var totalCurrentTeamKills = 0;
 
     recentStats.recentOverallStats.gamesPlayed++;
-    
+
+    // Calculate total team kills for kill participation
+    var teamId = counter < 5 ? 100 : 200; // Determine player's team
+    for(var i = 0; i < 10; i++) {
+      if (match.info.participants[i].teamId === teamId) {
+        totalOverallTeamKills += match.info.participants[i].kills;
+        totalCurrentTeamKills += match.info.participants[i].kills;
+      }
+    }
+
+    recentStats.recentMatchData.push(processMatchStatsHelper(match, counter, totalCurrentTeamKills));
+
     if (playerStats.gameEndedInEarlySurrender) {
       continue;
     }
@@ -174,15 +366,6 @@ function processRecentStats(recentMatchData) {
       recentStats.recentOverallStats.rolesPlayed.botLane++;
     } else if (playerStats.teamPosition === "UTILITY") {
       recentStats.recentOverallStats.rolesPlayed.support++;
-    }
-
-    // Calculate total team kills for kill participation
-    var teamId = counter < 5 ? 100 : 200; // Determine player's team
-    for(var i = 0; i < 10; i++) {
-      if (match.info.participants[i].teamId === teamId) {
-        totalOverallTeamKills += match.info.participants[i].kills;
-        totalCurrentTeamKills += match.info.participants[i].kills;
-      }
     }
 
     // Update champion stats correctly
@@ -229,7 +412,7 @@ function processRecentStats(recentMatchData) {
 function updateSummonerInfo(gameName, tagLine, summonerData) {
   document.getElementById("summonerName").innerHTML = `${gameName}#${tagLine}`;
   document.getElementById("summonerLevel").innerHTML = `Level: ${summonerData.summonerLevel}`;
-  const profileIconUrl = `https://ddragon.leagueoflegends.com/cdn/14.24.1/img/profileicon/${summonerData.profileIconId}.png`;
+  const profileIconUrl = `${ddragonURLwithVersion}/img/profileicon/${summonerData.profileIconId}.png`;
   document.getElementById("summonerProfileIcon").src = profileIconUrl;
 }
 
@@ -276,6 +459,166 @@ function updateRecentOverallStats(recentStats) {
   console.log(recentStats);
 }
 
+function updateRecentChampionStats(recentStats) {
+  // const stats = recentStats.recentChampionStats;
+  // const arrayDisplay = stats.map(obj => {
+  //   return Object.entries(obj).map(([key, value]) => `${key}: ${value}`).join(', ');
+  // }).join('<br>');
+  // document.getElementById("recentChampionStats").innerHTML = arrayDisplay;
+  const stats = recentStats.recentChampionStats;
+
+  const generateTable = (stats) => {
+    let tableHTML = `
+      <table border="1" style="border-collapse: collapse; width: 100%; text-align: center;">
+        <thead>
+          <tr>
+            <th>Champion</th>
+            <th>Total Games</th>
+            <th>Wins</th>
+            <th>Losses</th>
+            <th>Win Rate</th>
+            <th>Average KDA</th>
+            <th>CS per Minute</th>
+          </tr>
+        </thead>
+        <tbody>
+    `;
+
+    stats.forEach((champion) => {
+      const totalGames = champion.championWins + champion.championLosses;
+      const winRate = ((champion.championWins / totalGames) * 100).toFixed(2);
+      const averageKDA = (
+        (champion.championKills + champion.championAssists) /
+        Math.max(1, champion.championDeaths)
+      ).toFixed(2);
+      const csPerMinute = (
+        champion.championCreepScore /
+        champion.championMinutesPlayed
+      ).toFixed(2);
+
+      tableHTML += `
+        <tr>
+          <td>${champion.championName}</td>
+          <td>${totalGames}</td>
+          <td>${champion.championWins}</td>
+          <td>${champion.championLosses}</td>
+          <td>${winRate}%</td>
+          <td>${averageKDA}</td>
+          <td>${csPerMinute}</td>
+        </tr>
+      `;
+    });
+
+    tableHTML += `
+        </tbody>
+      </table>
+    `;
+    return tableHTML;
+  };
+
+  // Render the table in the HTML
+  document.getElementById("recentChampionStats").innerHTML = generateTable(stats);
+}
+
+function updateRecentMatchData(recentStats) {
+  let tableHTML = `
+    <table border="1" style="border-collapse: collapse; width: 100%; text-align: center;">
+      <tbody>
+  `;
+  for (const match of recentStats.recentMatchData) {
+    const queueMap = new Map(queueData.map(q => [q.queueId, q.description]));
+    const queueType = queueMap.get(match.queueId);
+
+    let mins = Math.floor(match.minutesPlayed);
+    let secs = Math.round((match.minutesPlayed - mins) * 60);
+    let date = new Date(match.gameEndTimestamp);
+
+    const summonerSpellMap = new Map(summonerSpells.map(q => [q.id, q.name]));
+    const summonerSpell1 = summonerSpellMap.get(match.summoner1Id);
+    const summonerSpell2 = summonerSpellMap.get(match.summoner2Id);
+    
+    const runePathsMapName = new Map(runePaths.map(q => [q.id, q.name]));
+    const runePathPrimaryName = runePathsMapName.get(match.runePathPrimary);
+
+    const runePathsMapCode = new Map(runePaths.map(q => [q.id, q.code]));
+    runePathsSecondaryCode = runePathsMapCode.get(match.runePathSecondary);
+
+    const runesMapURL = new Map(runes.map(q => [q.id, q.iconURL]));
+    const runeKeystoneURL = runesMapURL.get(match.runeKeystone);
+
+    const KDA = KDAcalculator(match.kills, match.deaths, match.assists);
+    const killParticipation = Math.round(match.killParticipation * 100);
+    const csPerMinute = Math.round(match.creepScore / match.minutesPlayed * 10) / 10;
+    tableHTML += `
+      <tr>
+        <td>${match.gameResult} ${mins}m ${secs}s<br><br>${queueType}<br>${date.toLocaleString()}</td>
+        <td>
+          <img class="championIconMain" src="${ddragonURLwithVersion}/img/champion/${match.championName}.png"><br>
+          ${match.champLevel}
+        </td>
+        <td class="summonerSpellIcon">
+          <img src="${ddragonURLwithVersion}/img/spell/${summonerSpell1}.png">
+          <img src="${ddragonURL}/img/perk-images/Styles/${runePathPrimaryName}/${runeKeystoneURL}.png">
+          <br>
+          <img src="${ddragonURLwithVersion}/img/spell/${summonerSpell2}.png">
+          <img src="${ddragonURL}/img/perk-images/Styles/${runePathsSecondaryCode}.png">
+        </td>
+        <td class="summonerSpellIcon">
+          <img src="${ddragonURLwithVersion}/img/item/${match.itemIds[0]}.png">
+          <img src="${ddragonURLwithVersion}/img/item/${match.itemIds[1]}.png">
+          <img src="${ddragonURLwithVersion}/img/item/${match.itemIds[2]}.png">
+          <img src="${ddragonURLwithVersion}/img/item/${match.itemIds[3]}.png">
+          <br>
+          <img src="${ddragonURLwithVersion}/img/item/${match.itemIds[4]}.png">
+          <img src="${ddragonURLwithVersion}/img/item/${match.itemIds[5]}.png">
+          <img src="${ddragonURLwithVersion}/img/item/${match.itemIds[6]}.png">
+        </td>
+        <td>
+          ${match.kills} / ${match.deaths} / ${match.assists}
+          <br>
+          ${KDA} KDA (${killParticipation}%)
+          <br>
+          ${match.creepScore} CS (${csPerMinute})
+          <br>
+          ${match.visionScore} Vision
+        </td>
+        <td class="championIconSmall">
+          <img src="${ddragonURLwithVersion}/img/champion/${match.participants[0].championName}.png">
+          ${match.participants[0].gameName}
+          <img src="${ddragonURLwithVersion}/img/champion/${match.participants[5].championName}.png">
+          ${match.participants[5].gameName}
+          <br>
+          <img src="${ddragonURLwithVersion}/img/champion/${match.participants[1].championName}.png">
+          ${match.participants[1].gameName}
+          <img src="${ddragonURLwithVersion}/img/champion/${match.participants[6].championName}.png">
+          ${match.participants[6].gameName}
+          <br>
+          <img src="${ddragonURLwithVersion}/img/champion/${match.participants[2].championName}.png">
+          ${match.participants[2].gameName}
+          <img src="${ddragonURLwithVersion}/img/champion/${match.participants[7].championName}.png">
+          ${match.participants[7].gameName}
+          <br>
+          <img src="${ddragonURLwithVersion}/img/champion/${match.participants[3].championName}.png">
+          ${match.participants[3].gameName}
+          <img src="${ddragonURLwithVersion}/img/champion/${match.participants[8].championName}.png">
+          ${match.participants[8].gameName}
+          <br>
+          <img src="${ddragonURLwithVersion}/img/champion/${match.participants[4].championName}.png">
+          ${match.participants[4].gameName}
+          <img src="${ddragonURLwithVersion}/img/champion/${match.participants[9].championName}.png">
+          ${match.participants[9].gameName}
+        </td>
+      </tr>
+    `;
+  }
+  tableHTML += `
+      </tbody>
+    </table>
+  `;
+  document.getElementById("recentMatchData").innerHTML = tableHTML;
+}
+
+
 // Main function
 async function searchSummoner() {
   clearSummonerInfo();
@@ -285,6 +628,11 @@ async function searchSummoner() {
 
   try {
     // Fetch data
+    const ddragonVersionHistory = await fetchDdragonVersion();
+    const ddragonVersion = ddragonVersionHistory[0];
+    ddragonURL = "https://ddragon.leagueoflegends.com/cdn"
+    ddragonURLwithVersion = "https://ddragon.leagueoflegends.com/cdn/" + ddragonVersion;
+
     const accountData = await fetchAccountData(gameName, tagLine, regionId);
     puuid = accountData.puuid;
     console.log(puuid);
@@ -293,6 +641,8 @@ async function searchSummoner() {
     const rankedData = await fetchRankedData(summonerId);
     const recentMatchListData = await fetchMatchListData(puuid);
     const recentMatchData = await fetchMatchHistoryData(recentMatchListData);
+    
+    console.log(recentMatchData);
 
     // Process data
     const { rankFlex, rankSolo } = processRankedData(rankedData);
@@ -302,16 +652,9 @@ async function searchSummoner() {
     updateSummonerInfo(gameName, tagLine, summonerData);
     updateRankedStats(rankFlex, rankSolo);
     updateRecentOverallStats(recentStats);
-    
+    updateRecentChampionStats(recentStats);
+    updateRecentMatchData(recentStats);
     console.log(recentMatchData);
-
-    const arrayDisplay2 = recentStats.recentChampionStats.map(obj => {
-      return Object.entries(obj).map(([key, value]) => `${key}: ${value}`).join(', ');
-    }).join('<br>');
-    document.getElementById("recentChampionStats").innerHTML = arrayDisplay2;
-
-    const arraydisplay = recentMatchListData.join('<br>');
-    document.getElementById("matchData").innerHTML = arraydisplay;
   } catch (error) {
     console.error("Error fetching or processing data:", error);
   }
