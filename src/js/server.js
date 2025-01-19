@@ -113,7 +113,7 @@ app.get('/match/by-puuid', async (req, res) => {
   const { puuid } = req.query;
 
   // 30 days before
-  const startTime = Math.floor(Date.now() / 1000) - 30 * 24 * 60 * 60 - 5*24*60*60; 
+  const startTime = Math.floor(Date.now() / 1000) - 30 * 24 * 60 * 60-24*60*60; 
   const matchListURL = regionRoutingURL + `/lol/match/v5/matches/by-puuid/${puuid}/ids?startTime=${startTime}&start=0&count=20&api_key=${APIkey}`;
   
   try {
