@@ -7,7 +7,7 @@ var ddragonVersionHistory = await fetchDdragonVersion();
 const ddragonURLwithVersion = `${ddragonURL}/` + ddragonVersionHistory[0];
 
 
-// Utility function that clears all html info
+// clears all html info
 function clearSummonerInfo() {
   document.getElementById("summonerName").innerHTML = "";
   document.getElementById("summonerLevel").innerHTML = "";
@@ -24,9 +24,7 @@ function clearSummonerInfo() {
   document.getElementById("recentOverallStatsTeamPosition").innerHTML = "";
 }
 
-
-
-// Update UI functions
+// displays name and profile picture
 function updateSummonerInfo(gameName, tagLine, summonerData) {
   document.getElementById("summonerName").innerHTML = `${gameName}#${tagLine}`;
   document.getElementById("summonerLevel").innerHTML = `Level: ${summonerData.summonerLevel}`;
@@ -34,6 +32,7 @@ function updateSummonerInfo(gameName, tagLine, summonerData) {
   document.getElementById("summonerProfileIcon").src = profileIconUrl;
 }
 
+// displays ranked stats dasboard
 function updateRankedStats(rankFlex, rankSolo) {
   document.getElementById("rankedStatsHeading").innerHTML = "Ranked Stats";
   document.getElementById("rankedFlexHeading").innerHTML = "Ranked Flex";
@@ -52,6 +51,7 @@ function updateRankedStats(rankFlex, rankSolo) {
   }
 }
 
+// displays recentoverallstats dashboard
 function updateRecentOverallStats(recentStats) {
   const stats = recentStats.recentOverallStats;
   const gamesPlayed = stats.wins + stats.losses;
@@ -74,6 +74,7 @@ function updateRecentOverallStats(recentStats) {
   
 }
 
+// displays recent champion stats
 function updateRecentChampionStats(recentStats) {
   // const stats = recentStats.recentChampionStats;
   // const arrayDisplay = stats.map(obj => {
@@ -135,6 +136,7 @@ function updateRecentChampionStats(recentStats) {
   document.getElementById("recentChampionStats").innerHTML = generateTable(stats);
 }
 
+// displays all match stats
 function updateRecentMatchData(recentStats) {
   let tableHTML = `
     <table border="1" style="border-collapse: collapse; width: 100%; text-align: center;">

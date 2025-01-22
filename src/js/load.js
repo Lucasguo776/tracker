@@ -3,8 +3,6 @@ import { puuid } from './script.js'; // If puuid is defined globally elsewhere
 
 const localhostURL = "http://localhost:3000";
 
-    
-
 // Fetch functions
 async function fetchDdragonVersion() {
   const response = await fetch(localhostURL + '/ddragon/version');
@@ -41,7 +39,22 @@ async function fetchMatchHistoryData(matchListData) {
   return responseArray;
 }
 
-// Process ranked data
+/**
+ * Processes a summoner's ranked data and returns detailed statistics for both Flex and Solo queues.
+ *
+ * Parameters:
+ * - summonerRankedData (Array): An array of ranked data objects for a summoner, where each object contains
+ *   details about the summoner's performance in a specific ranked queue.
+ *
+ * Returns:
+ * - Object: An object containing two properties:
+ *   - rankFlex: An object with data for the summoner's performance in the Flex ranked queue, including tier, 
+ *     rank, wins, losses, league points, and win rate.
+ *   - rankSolo: An object with data for the summoner's performance in the Solo ranked queue, including tier, 
+ *     rank, wins, losses, league points, and win rate.
+ * 
+ * If the summoner has no ranked data, both `rankFlex` and `rankSolo` will default to "UNRANKED".
+ */
 function processRankedData(summonerRankedData) {
   const rankFlex = { tier: "UNRANKED" };
   const rankSolo = { tier: "UNRANKED" };
@@ -74,6 +87,20 @@ function processRankedData(summonerRankedData) {
   return { rankFlex, rankSolo };
 }
 
+/**
+ * Processes match statistics for a specific player and returns an object containing detailed performance data.
+ *
+ * Parameters:
+ * - match (Object): The match data object, typically containing information about the match, participants,
+ *   and other game-related data.
+ * - counter (number): The index of the participant in the `match.info.participants` array representing the player
+ *   whose stats are being processed.
+ * - totalCurrentTeamKills (number): The total number of kills achieved by the player's team in the match.
+ *
+ * Returns:
+ * - Object: An object containing detailed statistics for the specified player, including match ID, 
+ *   participant information, performance metrics, items, summoner spells, and rune paths.
+ */
 function processMatchStatsHelper(match, counter, totalCurrentTeamKills) {
   const playerStats = match.info.participants[counter];
 
@@ -134,6 +161,71 @@ function processMatchStatsHelper(match, counter, totalCurrentTeamKills) {
   return recentMatchStats;
 }
 
+/**
+ * Processes individual champion statistics for a summoner in a given match.
+ *
+ * Parameters:
+ * - playerStats (Object): The individual player statistics from the match, containing detailed data
+ *   such as champion name, kills, deaths, assists, and other match performance metrics.
+ * - totalCurrentTeamKills (number): The total number of kills achieved by the player's team in the match.
+ *
+ * Returns:
+ * - Object: An object representing the updated champion stats, including win/loss record, kills, deaths,
+ *   assists, creep score, and more. If the champion has not been recorded yet, it initializes the stats.
+ */
+function processRecentChampionStatsHelper(playerStats, totalCurrentTeamKills, recentStats) {
+  let champion = recentStats.recentChampionStats.find(item => item.championName === playerStats.championName);
+  
+  if (!champion) {
+    // Initialize the champion stats if not found
+    champion = {
+      championName: playerStats.championName,
+      championWins: playerStats.win ? 1 : 0,
+      championLosses: playerStats.win ? 0 : 1,
+      championKills: playerStats.kills,
+      championDeaths: playerStats.deaths,
+      championAssists: playerStats.assists,
+      championMinutesPlayed: playerStats.timePlayed / 60, 
+      championCreepScore: playerStats.neutralMinionsKilled + playerStats.totalMinionsKilled, 
+      championGold: playerStats.goldEarned, 
+      championDamage: playerStats.totalDamageDealtToChampions, 
+      championVisionScore: playerStats.visionScore, 
+      championTeamKills: totalCurrentTeamKills,
+      championKillParticipation: (playerStats.kills + playerStats.assists) / totalCurrentTeamKills
+    };
+    recentStats.recentChampionStats.push(champion);
+  } else {
+    // Update the champion stats if already recorded
+    champion.championWins += playerStats.win ? 1 : 0;
+    champion.championLosses += playerStats.win ? 0 : 1;
+    champion.championKills += playerStats.kills;
+    champion.championDeaths += playerStats.deaths;
+    champion.championAssists += playerStats.assists;
+    champion.championMinutesPlayed += playerStats.timePlayed / 60;
+    champion.championCreepScore += playerStats.neutralMinionsKilled + playerStats.totalMinionsKilled;
+    champion.championGold += playerStats.goldEarned; 
+    champion.championDamage += playerStats.totalDamageDealtToChampions; 
+    champion.championVisionScore += playerStats.visionScore; 
+    champion.championTeamKills += totalCurrentTeamKills;
+    champion.championKillParticipation = (champion.championKills + champion.championAssists) / champion.championTeamKills;
+  }
+
+  return recentStats;
+}
+
+/**
+ * Processes recent match data for a summoner and calculates overall and champion-specific statistics.
+ *
+ * Parameters:
+ * - recentMatchData (Array): An array of recent match data objects, each containing information about the match,
+ *   participants, and the player's performance. The data is used to calculate various statistics for the summoner.
+ *
+ * Returns:
+ * - Object: An object containing two properties:
+ *   - recentOverallStats: A summary of the summoner's overall performance across all recent matches
+ *   - recentChampionStats: An array of objects representing the summoner's performance with individual champions
+ *   - recentMatchData: An array of objects containing stats each game played 
+ */
 function processRecentStats(recentMatchData) {
   var recentStats = {
     recentOverallStats: {
@@ -211,39 +303,10 @@ function processRecentStats(recentMatchData) {
       recentStats.recentOverallStats.rolesPlayed.support++;
     }
 
-    // Update champion stats correctly
-    var champion = recentStats.recentChampionStats.find(item => item.championName === playerStats.championName);
-    if (!champion) {
-      recentStats.recentChampionStats.push({
-        championName: playerStats.championName,
-        championWins: playerStats.win ? 1 : 0,
-        championLosses: playerStats.win ? 0 : 1,
-        championKills: playerStats.kills,
-        championDeaths: playerStats.deaths,
-        championAssists: playerStats.assists,
-        championMinutesPlayed: playerStats.timePlayed / 60, 
-        championCreepScore: playerStats.neutralMinionsKilled + playerStats.totalMinionsKilled, 
-        championGold: playerStats.goldEarned, 
-        championDamage: playerStats.totalDamageDealtToChampions, 
-        championVisionScore: playerStats.visionScore, 
-        championTeamKills: totalCurrentTeamKills,
-        championKillParticipation: (playerStats.kills + playerStats.assists) / totalCurrentTeamKills
-      });
-    } else {
-      champion.championWins += playerStats.win ? 1 : 0;
-      champion.championLosses += playerStats.win ? 0 : 1;
-      champion.championKills += playerStats.kills;
-      champion.championDeaths += playerStats.deaths;
-      champion.championAssists += playerStats.assists;
-      champion.championMinutesPlayed += playerStats.timePlayed / 60;
-      champion.championCreepScore += playerStats.neutralMinionsKilled + playerStats.totalMinionsKilled;
-      champion.championGold += playerStats.goldEarned; 
-      champion.championDamage += playerStats.totalDamageDealtToChampions; 
-      champion.championVisionScore += playerStats.visionScore; 
-      champion.championTeamKills += totalCurrentTeamKills;
-      champion.championKillParticipation = (champion.championKills + champion.championAssists) / champion.championTeamKills;
-    }
+    // Update champion stats correctly by calling the helper function
+    recentStats = processRecentChampionStatsHelper(playerStats, totalCurrentTeamKills, recentStats);
   }
+
   recentStats.recentOverallStats.killParticipation = (recentStats.recentOverallStats.kills + recentStats.recentOverallStats.assists) / totalOverallTeamKills;
   recentStats.recentChampionStats.sort((a, b) => b.championWins + b.championLosses - a.championWins - a.championLosses);
   return recentStats;
@@ -257,6 +320,5 @@ export {
   fetchMatchListData, 
   fetchMatchHistoryData, 
   processRankedData, 
-  processMatchStatsHelper, 
   processRecentStats 
 };
