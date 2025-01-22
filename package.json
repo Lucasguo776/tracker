@@ -4,7 +4,8 @@
   "main": "script.js",
   "scripts": {
     "lint": "eslint .",
-    "test": "jest"
+    "test": "jest",
+    "start": "node src/js/server.js"
   },
   "keywords": [],
   "author": "",

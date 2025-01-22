@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src = "script.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script type = "module" src = "../js/script.js"></script>
 </head>
 <body>
     Enter In-game Name: <input type = "text" id="gameName" value = "pyromancer55"><br>
@@ -29,8 +29,13 @@
         <option value="15">Taiwan</option>
         <option value="16">Vietnam</option>
       </select>
-    <input type = "button" id = "searchButton" value = "Search the summoner" onclick = "searchSummoner()"></br>
-    
+    <input type = "button" id = "searchButton" value = "Search the summoner"></br>
+    <script type="module">
+        import { searchSummoner } from '../js/script.js';
+
+        // Set the onclick event for the button
+        document.getElementById('searchButton').onclick = searchSummoner;
+    </script>
     <span id="summonerName"></span><br>
     <span id="summonerLevel"></span><br>
     <img id="summonerProfileIcon"/><br>
@@ -50,5 +55,6 @@
     <span id="recentChampionStats"></span><br>
     <span id="matchData"></span>
     <span id="recentMatchData"></span>
+
 </body>
 </html>
